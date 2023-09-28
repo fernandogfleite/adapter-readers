@@ -63,3 +63,15 @@ class TestReaderAdapter:
         with pytest.raises(ValueError):
             reader = ReaderAdapter('app/tests/fixtures/test.txt')
             reader.read()
+
+    def test_get_reader(self):
+        reader = ReaderAdapter('app/tests/fixtures/test.json')
+        assert reader.get_reader() == JSONReader
+        
+        reader = ReaderAdapter('app/tests/fixtures/test.xml')
+        assert reader.get_reader() == XMLReader
+
+        with pytest.raises(ValueError):
+            reader = ReaderAdapter('app/tests/fixtures/test.txt')
+            reader.get_reader()
+        
