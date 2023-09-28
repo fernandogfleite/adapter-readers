@@ -1,8 +1,16 @@
 import xml.etree.ElementTree as ET
 import json
 import os
+import abc
 
-class XMLReader:
+
+class Reader(metaclass=abc.ABCMeta):
+    @abc.abstractmethod
+    def read(self):
+        pass
+
+
+class XMLReader(Reader):
     def __init__(self, filename):
         self.filename = filename
 
@@ -12,7 +20,7 @@ class XMLReader:
         return root
 
 
-class JSONReader:
+class JSONReader(Reader):
     def __init__(self, filename):
         self.filename = filename
 
@@ -22,11 +30,10 @@ class JSONReader:
         return data
 
 
-class ReaderAdapter:
+class ReaderAdapter(Reader):
     def __init__(self, filename):
         self.filename = filename
         self.extension = os.path.splitext(filename)[1][1:]
-        self.reader = self.get_reader()
         
     def get_reader(self):
         try:
@@ -39,4 +46,4 @@ class ReaderAdapter:
             raise ValueError('Unknown file type')
 
     def read(self):
-        return self.reader(self.filename).read()
+        return self.get_reader()(self.filename).read()
