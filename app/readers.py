@@ -4,9 +4,10 @@ import os
 import abc
 
 
-class Reader(abc.ABC):
+class Reader(metaclass=abc.ABCMeta):
+    @abc.abstractmethod
     def read(self):
-        raise NotImplementedError
+        pass
 
 
 class XMLReader(Reader):
