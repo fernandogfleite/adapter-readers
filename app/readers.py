@@ -5,9 +5,8 @@ import abc
 
 
 class Reader(metaclass=abc.ABCMeta):
-    @abc.abstractmethod
     def read(self):
-        pass
+        raise NotImplementedError
 
 
 class XMLReader(Reader):
